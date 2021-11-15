@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:halal_ldn/Screen/sign_in_screen.dart';
-import 'package:halal_ldn/Screen/sign_up_screen.dart';
+import 'package:halal_ldn/Screen/SignIn/sign_in_screen.dart';
+import 'package:halal_ldn/Screen/SignUp/sign_up_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
-      home: SignUpScreen(),
+      home: SignInScreen(),
+      routes: {},
     );
   }
 }

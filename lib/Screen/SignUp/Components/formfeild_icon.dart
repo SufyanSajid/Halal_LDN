@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
 
-class FormTextField extends StatelessWidget {
+class IconFormFeild extends StatelessWidget {
   String label;
+  IconData icon;
 
-  FormTextField({required this.label});
+  IconFormFeild({required this.label, required this.icon});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Container(
+        height: 50,
+        margin: EdgeInsets.only(top: 15),
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(38),
-            border: Border.all(
-              width: 2,
-              color: Colors.green,
-            )),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(38),
+          // border: Border.all(
+          //   width: 2,
+          //   color: Colors.green,
+          // ),
+        ),
         child: TextFormField(
           decoration: InputDecoration(
+            suffixIcon: Icon(
+              icon,
+              color: Colors.green,
+            ),
             fillColor: Colors.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(35),
