@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:halal_ldn/widgets/auth_button.dart';
 import '../widgets/form_text_field.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -12,28 +15,59 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.green;
+      }
+      return Colors.white;
+    }
+
     final _passFocusNode = FocusNode();
     return Stack(
       children: [
-        Image.asset('assets/images/sign_in_bg.png'),
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: ExactAssetImage(
+                'assets/images/sign_in_bg.png',
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+            child: Container(
+              decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+            ),
+          ),
+        ),
         Scaffold(
-          backgroundColor: Colors.white,
-          body: Padding(
-            padding: const EdgeInsets.all(35.0),
+          backgroundColor: Colors.black.withOpacity(0.7),
+          body: SingleChildScrollView(
             child: Column(
               children: [
-                const Text(
-                  'Welcome to Hala LDN',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
+                Container(
+                  margin: EdgeInsets.only(top: 55),
+                  child: const Text(
+                    'Welcome to Hala LDN',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                Form(
-                  child: Container(
-                    height: 500,
+                Container(
+                  height: 230,
+                  //width: double.infinity,
+                  margin: EdgeInsets.all(35),
+                  child: Form(
                     child: ListView(
                       children: [
                         FormTextField(
@@ -48,57 +82,90 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(
                           height: 20,
                         ),
-                        CheckboxListTile(
-                          controlAffinity: ListTileControlAffinity.leading,
-                          title: Text('Remember Me'),
-                          value: timeDilation != 1.0,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              timeDilation = value! ? 10.0 : 1.0;
-                            });
-                          },
+                        // CheckboxListTile(
+                        //   //tileColor: Colors.white,
+                        //   //activeColor: Colors.white,
+                        //   //checkColor: Colors.white,
+                        //   controlAffinity: ListTileControlAffinity.leading,
+                        //   title: Text(
+                        //     'Remember Me',
+                        //     style: TextStyle(
+                        //         color: Colors.white,
+                        //         fontWeight: FontWeight.bold),
+                        //   ),
+                        //   value: timeDilation != 1.0,
+                        //   onChanged: (bool? value) {
+                        //     setState(() {
+                        //       timeDilation = value! ? 10.0 : 1.0;
+                        //     });
+                        //   },
+                        // ),
+                        Row(
+                          children: [
+                            Checkbox(
+                                fillColor:
+                                    MaterialStateProperty.resolveWith(getColor),
+                                focusColor: Colors.white,
+                                hoverColor: Colors.white,
+                                checkColor: Colors.green,
+                                value: timeDilation != 1.0,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    timeDilation = value! ? 10.0 : 1.0;
+                                  });
+                                }),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Remember Me',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         // ElevatedButton(
                         //   onPressed: () {},
                         //   child: Text('Continue'),
                         //   style: ButtonStyle(),
                         // ),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.green),
-                          ),
-                          child: Text('Continue'),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Text(
-                          'Or',
-                          style: TextStyle(color: Colors.green),
-                          textAlign: TextAlign.center,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Create Account'),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Text(
-                          'Or',
-                          style: TextStyle(color: Colors.green),
-                          textAlign: TextAlign.center,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text('As Guest'),
-                        ),
                       ],
                     ),
                   ),
+                ),
+                //Lower button portion
+                AuthButton(
+                  label: 'Continue',
+                  color: Colors.green,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Text(
+                  'Or',
+                  style: TextStyle(color: Colors.green),
+                  textAlign: TextAlign.center,
+                ),
+                AuthButton(
+                  label: 'Create New Account',
+                  color: Colors.green,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Text(
+                  'Or',
+                  style: TextStyle(color: Colors.green),
+                  textAlign: TextAlign.center,
+                ),
+                AuthButton(
+                  label: 'As Guest',
+                  color: Colors.black.withOpacity(0.9),
                 ),
               ],
             ),

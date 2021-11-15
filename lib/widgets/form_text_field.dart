@@ -6,15 +6,19 @@ class FormTextField extends StatelessWidget {
   FormTextField({required this.label});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(38),
+            border: Border.all(
+              width: 2,
+              color: Colors.green,
+            )),
         child: TextFormField(
           decoration: InputDecoration(
+            fillColor: Colors.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(35),
               borderSide: BorderSide(
